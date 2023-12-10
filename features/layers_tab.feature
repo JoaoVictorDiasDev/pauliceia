@@ -10,7 +10,8 @@ Scenario: Adding 10 simultaneous layers
     Then I should have 10 active layers
 
 Scenario: Zoom button should change the indicated zoom
-    Given I am on the home page with 100000000 km zoom
+    Given I am on the home page with the layers tab expanded
+    When I change the zoom to 100000000 km 
     When I click the Add Layer button
     When I activate the first 1 layers on the listing
     When I close the Add Layer Pop-up

@@ -16,6 +16,7 @@ Given("I am on the home page with the layers tab expanded", async function () {
 });
 
 When('I click the Add Layer button', async function () {
+    await driver.sleep(200);
     let addLayerButton = await driver.findElement(By.className('md-button md-icon-button md-dense el-tooltip md-theme-default')) ;
     addLayerButton.click();
     await driver.sleep(200);
@@ -41,8 +42,7 @@ Then('I should have {int} active layers', async function (amountOfLayers) {
     expect(addedLayers.length).to.equal(amountOfLayers);
 });
 
-Given('I am on the home page with 100000000 km zoom', { timeout: 10 * 5000 }, async function() {
-    await driver.get(`${BASE_URL}/portal/explore`);
+When('I change the zoom to 100000000 km', { timeout: 10 * 5000 }, async function() {
     let value = await driver.findElement(By.className('ol-scale-line-inner')).getText();
     let decreaseZoomButton = await driver.findElement(By.className('ol-zoom-out'));
     while(value !== "100000000 km") {
@@ -50,8 +50,7 @@ Given('I am on the home page with 100000000 km zoom', { timeout: 10 * 5000 }, as
         value = await driver.findElement(By.className('ol-scale-line-inner')).getText();
     }
 
-    let layersButton = await driver.findElement(By.className('btn_sidebar')) ;
-    layersButton.click()
+    await driver.sleep(200);
 })
 
 When('I click the gear icon of the added layer', async function () {
