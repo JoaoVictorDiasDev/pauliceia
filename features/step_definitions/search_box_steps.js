@@ -10,7 +10,7 @@ const capabilities = Capabilities.chrome();
 capabilities.set('chromeoptions', { "w3c": false });
 const driver = new Builder().withCapabilities(capabilities).build();
 
-Given("I am on the home page", async function () {
+Given("I am on the home page", {timout: 5 * 5000}, async function () {
     await driver.get(`${BASE_URL}/portal/explore`);
 });
 

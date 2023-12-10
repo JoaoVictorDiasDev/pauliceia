@@ -18,3 +18,12 @@ Scenario: Zoom button should change the indicated zoom
     When I click the gear icon of the added layer 
     When I click the zoom button of the added layer
     Then I should see that the zoom is different than 100000000 km
+
+Scenario: Layer informations button should open a information pop-up 
+    Given I am on the home page with the layers tab expanded
+    When I click the Add Layer button
+    When I activate the first 1 layers on the listing
+    When I close the Add Layer Pop-up
+    When I click the gear icon of the added layer 
+    When I click the Layer Informations Button 
+    Then I should see a informations pop-up open with a title that matches the name of the layer

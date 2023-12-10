@@ -16,14 +16,14 @@ Given("I am on the home page with the layers tab expanded", async function () {
 });
 
 When('I click the Add Layer button', async function () {
-    await driver.sleep(200);
+    await driver.sleep(1000);
     let addLayerButton = await driver.findElement(By.className('md-button md-icon-button md-dense el-tooltip md-theme-default')) ;
     addLayerButton.click();
-    await driver.sleep(200);
+    await driver.sleep(1000);
 });
 
 When('I activate the first {int} layers on the listing', {timeout: 10 * 5000}, async function (amountOfLayers) {
-    await driver.sleep(200);
+    await driver.sleep(1000);
     for(i = 0; i < amountOfLayers; i++) {
         let activateLayerButton = await driver.findElement(By.className('el-button el-button--success is-round')) ;
         activateLayerButton.click();
@@ -72,6 +72,38 @@ When('I click the zoom button of the added layer', async function () {
 Then('I should see that the zoom is different than 100000000 km', async function () {
     let value = await driver.findElement(By.className('ol-scale-line-inner')).getText();
     expect(value).to.not.equal("100000000 km");
+});
+
+
+When('I click the Layer Informations Button', async function () {
+    let layerButtons = await driver.findElements(By.className('md-icon md-icon-font el-tooltip md-theme-default'));
+
+    for(i = 0; i < layerButtons.length; i++) {
+        let layerButtonText = await layerButtons[i].getText();
+        if (layerButtonText === 'assignment') {
+            await layerButtons[i].click();
+        }
+    }
+});
+
+Then('I should see a informations pop-up open with a title that matches the name of the layer', async function () {
+    await driver.sleep(1000);
+
+    let name = await driver.findElement(By.className('box-layers'));
+    let layerName = await name.findElement(By.css('b')).getText();
+
+    let count = 0;
+    let index = 0;
+
+    let mainString = await driver.getPageSource();
+    let subString = layerName;
+
+    while ((index = mainString.indexOf(subString, index)) !== -1) {
+        count++;
+        index += subString.length;
+    }
+     
+    expect(count).to.equal(3);
 });
 
 AfterAll(async function(){
